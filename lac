@@ -1,0 +1,28 @@
+participant Member
+participant UI
+participant System
+participant Book
+participant Librarian
+
+Member -> UI: Nhập thông tin đăng nhập
+UI -> System: Xác thực thông tin
+System -> Member: Đăng nhập thành công
+
+Member -> UI: Nhập từ khoá tìm kiếm sách
+UI -> System: Truy vấn danh sách sách
+System -> Book: Lấy danh sách sách
+Book -> System: Trả về danh sách
+System -> UI: Hiển thị kết quả tìm kiếm
+
+Member -> UI: Gửi yêu cầu mượn sách
+UI -> System: Kiểm tra trạng thái sách
+System -> Book: Kiểm tra tình trạng sách
+
+alt Sách có sẵn
+    System -> Librarian: Gửi yêu cầu duyệt
+    Librarian -> System: Duyệt yêu cầu
+    System -> Book: Cập nhật trạng thái "đang mượn"
+    System -> Member: Thông báo mượn thành công
+else Sách không có sẵn
+    System -> Member: Thông báo sách không có sẵn
+end
